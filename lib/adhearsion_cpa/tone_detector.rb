@@ -12,12 +12,12 @@ module AdhearsionCpa
       process options
 
       if async?
-        component.register_event_handler Punchblock::Component::Input::Signal do |event|
+        component.register_event_handler Adhearsion::Rayo::Component::Input::Signal do |event|
           yield event if block_given?
         end
 
-        component.register_event_handler Punchblock::Event::Complete do |event|
-          yield event.reason if block_given? && event.reason.is_a?(Punchblock::Component::Input::Signal)
+        component.register_event_handler Adhearsion::Event::Complete do |event|
+          yield event.reason if block_given? && event.reason.is_a?(Adhearsion::Rayo::Component::Input::Signal)
         end
       end
 
@@ -50,7 +50,7 @@ module AdhearsionCpa
     end
 
     def component
-      @component ||= Punchblock::Component::Input.new mode: :cpa, grammars: tone_grammars
+      @component ||= Adhearsion::Rayo::Component::Input.new mode: :cpa, grammars: tone_grammars
     end
 
     def tone_grammars
@@ -68,7 +68,7 @@ module AdhearsionCpa
 
     def build_grammar_for(tone, opts={})
       opts.merge! @options
-      ns_url = "#{Punchblock::BASE_RAYO_NAMESPACE}:cpa:#{tone}:#{Punchblock::RAYO_VERSION}"
+      ns_url = "#{Adhearsion::Rayo::BASE_RAYO_NAMESPACE}:cpa:#{tone}:#{Adhearsion::Rayo::RAYO_VERSION}"
       opts.each_with_index do |(k, v), i|
         if i == 0
           ns_url << "?#{k}=#{v}"
@@ -77,7 +77,7 @@ module AdhearsionCpa
         end
       end
 
-      Punchblock::Component::Input::Grammar.new url: ns_url
+      Adhearsion::Rayo::Component::Input::Grammar.new url: ns_url
     end
 
     def async?

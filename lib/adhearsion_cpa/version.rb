@@ -1,3 +1,3 @@
 module AdhearsionCpa
-  VERSION = "0.1.1"
+  VERSION = 3.0.0"
 end
